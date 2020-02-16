@@ -18,6 +18,11 @@
 **download method**: download the txt file in **ENA link** and get the ftp sites of data fastq.gz according to the txt file,then use axel to download the sequence in fastq.gz<br>
 **description**: single-cell RNA-seq data from 45,000 immune cells from eight breast carcinomas, as well as matched normal breast tissue, blood, and lymph node.Single-cell RNA sequencing was performed on eight donors using the InDrop v2 protocol. For each donor populations of CD45+ immune cells were assayed for trancriptome-wide RNA-sequence. At least one replicate was taken for each donor.<br>
 **sample size**: 30 TCR paired-end samples
-
-
-
+## 2. Clonal replacement of tumor-specific T cells following PD-1 blockade
+**reference**: Clonal replacement of tumor-specific T cells following PD-1 blockade(https://www.nature.com/articles/s41591-019-0522-3)  
+**ensemble and scRNA-seq data**:  have been deposited in the GEO and are available under accession number **GSE123814**, **single cell** sequencing data accession number **GSE123813**, **bulk RNA** sequencing data accession number **GSE123812**.   
+**Exome-sequencing data** : have been deposited in the Sequence Read Archive (SRA) and are available under accession number **PRJNA533341**.   
+**Bulk TCR-seq data** : can be accessed through the ImmuneACCESS database of Adaptive Biotechnologies (https://doi.org/10.21417/KY2019NM; https://clients.adaptivebiotech.com/pub/yost-2019-natmed).  
+**other relevant data** : are available from the corresponding authors upon reasonable request.  
+**description**: Here we performed paired single-cell RNA and T cell receptor sequencing on 79,046 cells from site-matched tumors from patients with basal or squamous cell carcinoma before and after anti-PD-1 therapy. In **single cell** sequencing condition, dissociated tumor samples were sorted as either CD45+ CD3+ tumor-infiltrating T cells, other CD45+ CD3- tumor-infiltrating lymphocytes and CD45- CD3- tumor/stromal cells. Sorted cells were subjected to paired single cell RNA- and TCR-sequencing on the droplet based 10X Genomics platform. In **bulk RNA** sequencing condition, CD4+ T helper cells were sorted as naive T cells (CD4+CD25-CD45RA+), Treg (CD4+CD25+IL7Rlo), Th1 (CD4+CD25-IL7RhiCD45RA-CXCR3+CCR6-), Th2 (CD4+CD25-IL7RhiCD45RA-CXCR3-CCR6-), Th17 (CD4+CD25-IL7RhiCD45RA-CXCR3-CCR6+), Th1-17 (CD4+CD25-IL7RhiCD45RA-CXCR3+CCR6+), and Tfh subsets (CXCR5+ counterparts of each). RNA-seq cDNA library construction was performed using the SMART-Seq v4 Ultra Low Input RNA Kit (Clontech) with 2 ng of input RNA. Sequencing libraries were prepared using the Nextera XT DNA Library Prep Kit (Illumina).    
+**sample size**: 86 single cell paired-end samples, 38 bulk RNA paired-end samples.
