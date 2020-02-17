@@ -5,7 +5,7 @@ Typically the user will pass in a sequence set of hundreds to thousands of TCR s
 
 GLIPH returns significant motif lists, significant TCR convergence groups, and for each group, a collection of scores for that group indicating enrichment for motif, V-gene, CDR3 length, shared HLA among contributors, and proliferation count. When HLA data is available, it predicts the likely HLA that the set of TCRs recognizes.
 
-<font color=red>To avoid false positive conclusions drawn from PCR or read error, we separated biological replicates containing TCRs against the same specificity from different individuals and searched for enrichment of common motifs. Using this method, we could detect enriched motifs in CDR3s that were found within TCRs specific to a given pMHC from multiple individuals, but not in TCRs recognizing unrelated antigens </font>
+<font color=#FF0000>To avoid false positive conclusions drawn from PCR or read error, we separated biological replicates containing TCRs against the same specificity from different individuals and searched for enrichment of common motifs. Using this method, we could detect enriched motifs in CDR3s that were found within TCRs specific to a given pMHC from multiple individuals, but not in TCRs recognizing unrelated antigens </font>
 
 
 ## Installation
