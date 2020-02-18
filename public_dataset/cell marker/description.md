@@ -1,6 +1,6 @@
-source: Cellmarker database
-URL: http://biocc.hrbmu.edu.cn/CellMarker/index.jsp
-data description: cell type marker of blood
+source: Cellmarker database  
+URL: http://biocc.hrbmu.edu.cn/CellMarker/index.jsp  
+data description: cell type marker of blood  
 data column description:
 >Species: Human  
 Tissue: Peripheral blood  
