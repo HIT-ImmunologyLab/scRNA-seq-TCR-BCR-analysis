@@ -6,12 +6,12 @@ data column description:
 Tissue: Peripheral blood  
 Cell Type: cell subtypes  
 Cancer: sample source, cancer or normal  
-Cell Marker: marker of the cell type  
+Cell Marker: markers of the cell type  
 Source: the data come from single cell sequencing, experiment, review or company  
-gene symbol: the corresponding gene symbolm of the cell marker  
-title: referance paper title  
-PMID: reference paper pmid  
-journal: the journal of the reference paper published on  
+gene symbol: the corresponding gene symbol of the cell marker  
+title: reference paper title  
+PMID: reference paper PMID  
+journal: the journal of the reference paper published   
 reference paper type: the reference paper come from single cell sequencing, experiment, review or company  
 
 Reference:  
