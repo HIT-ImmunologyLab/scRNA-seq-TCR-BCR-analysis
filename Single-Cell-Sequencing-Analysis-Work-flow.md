@@ -282,6 +282,7 @@ Reference:<https://www.hongguangblog.cn/archives/6/>
 以**小鼠的外周血**(**PBMC**)样本为例，详细讲述下细胞亚型的鉴定方法。
 
 通过基本分析，我们可以获得下图细胞聚类tsne图，该样本共获得14个（0-13）亚群，但每个cluster对应的细胞亚群我们如何鉴定呢？
+
 ![image](https://github.com/fengxiaZhou/NCP-scRNA-seq/raw/master/images/cellmarker_7.jfif)
 ### Step1 搜集样本中细胞类型及标记基因
 通过已发表文献或者细胞标志物数据库CellMarker（官网：http://biocc.hrbmu.edu.cn/CellMarker/#）对样本中的细胞类型以及标记基因（需要注意的是，已报道的标记基因仅能说明这些基因在目标细胞中高表达，但并非在其他细胞中完全不表达，因此在细胞鉴定时往往需要多个标记基因共同才能确定）进行搜集。具体的搜集方法如下：
