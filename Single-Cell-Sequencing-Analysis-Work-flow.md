@@ -70,9 +70,9 @@ Enter commands in R (or Rstudio, if installed)<br>
 ## Usage ##
 - step1:Setup the Seurat Object,the input is the output of the cellranger pipeline from 10X, returning a unique molecular identified (UMI) count matrix
 
-        pbmc.data <- Read10X(data.dir = "../seurat/seurat-master/tests/testdata/cr3.0")
+        pbmc.data <- Read10X(data.dir = "../seurat/pbmc3k")
         #Initialize the Seurat object with the raw (non-normalized data)
-		pbmc <- CreateSeuratObject(counts = pbmc.data$`Gene Expression`, project = "pbmc3k", min.cells = 10,min.features = 30)
+		pbmc <- CreateSeuratObject(counts = pbmc.data, project = "pbmc3k", min.cells = 10,min.features = 30)
 
 - step2:Standard the pre-processing workflow, 数据筛选，每个细胞表达基因的阈值
 
