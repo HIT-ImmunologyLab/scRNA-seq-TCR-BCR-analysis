@@ -285,7 +285,7 @@ Reference:<https://www.hongguangblog.cn/archives/6/>
 
 ![image](https://github.com/fengxiaZhou/NCP-scRNA-seq/raw/master/images/cellmarker_7.jfif)
 ### Step1 搜集样本中细胞类型及标记基因
-通过已发表文献或者细胞标志物数据库CellMarker（官网：http://biocc.hrbmu.edu.cn/CellMarker/#）对样本中的细胞类型以及标记基因（需要注意的是，已报道的标记基因仅能说明这些基因在目标细胞中高表达，但并非在其他细胞中完全不表达，因此在细胞鉴定时往往需要多个标记基因共同才能确定）进行搜集。具体的搜集方法如下：
+通过已发表文献或者细胞标志物数据库CellMarker（官网：http://biocc.hrbmu.edu.cn/CellMarker/# ）对样本中的细胞类型以及标记基因（需要注意的是，已报道的标记基因仅能说明这些基因在目标细胞中高表达，但并非在其他细胞中完全不表达，因此在细胞鉴定时往往需要多个标记基因共同才能确定）进行搜集。具体的搜集方法如下：
 
 a.进入CellMarker官网，选择研究的物种及相应的组织，点击其中一类细胞进行查看；
 ![image](https://github.com/fengxiaZhou/NCP-scRNA-seq/raw/master/images/cellmarker_1.jfif)
