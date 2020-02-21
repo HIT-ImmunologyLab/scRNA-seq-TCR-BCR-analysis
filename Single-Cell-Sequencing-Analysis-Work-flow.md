@@ -277,7 +277,7 @@ Reference:<https://www.hongguangblog.cn/archives/6/>
 ## Marker基因定义细胞亚群
 由于不同的研究目的关注的细胞类型也不一样，一般基本分析结果中的细胞聚类是基于细胞间的表达相似情况进行的，并标记为cluster0,1,2……n；因此，对于单细胞转录组的分析结果，第一步也是非常重要的一步就是对聚类的cluster进行细胞亚型鉴定。
 
-一般情况下，我们根据亚群上调表达的基因进行细胞亚型鉴定，基本分析结果中也展示了每个亚群差异倍数top10的基因小提琴图和tsne图，但很多时候鉴定细胞的基因往往不在top10的基因中，而每个亚群所有上调表达的基因又非常多。因此，细胞类型鉴定更多的是依赖人工的解读过程。
+一般情况下，我们根据亚群上调表达的基因进行细胞亚型鉴定，基本分析结果中也展示了每个亚群差异倍数top10的基因小提琴图和tSNE图，但很多时候鉴定细胞的基因往往不在top10的基因中，而每个亚群所有上调表达的基因又非常多。因此，细胞类型鉴定更多的是依赖人工的解读过程。
 
 以**小鼠的外周血**(**PBMC**)样本为例，详细讲述下细胞亚型的鉴定方法。
 
@@ -288,12 +288,15 @@ Reference:<https://www.hongguangblog.cn/archives/6/>
 通过已发表文献或者细胞标志物数据库CellMarker（官网：http://biocc.hrbmu.edu.cn/CellMarker/# ）对样本中的细胞类型以及标记基因（需要注意的是，已报道的标记基因仅能说明这些基因在目标细胞中高表达，但并非在其他细胞中完全不表达，因此在细胞鉴定时往往需要多个标记基因共同才能确定）进行搜集。具体的搜集方法如下：
 
 a.进入CellMarker官网，选择研究的物种及相应的组织，点击其中一类细胞进行查看；
+
 ![image](https://github.com/fengxiaZhou/NCP-scRNA-seq/raw/master/images/cellmarker_1.jfif)
 
 b.以T细胞为例，细胞对应的marker及支持材料数量（从高往低排序）；
+
 ![image](https://github.com/fengxiaZhou/NCP-scRNA-seq/raw/master/images/cellmarker_2.jfif)
 
-下表为按照上述方法从CellMarker（除了上面获得marker基因外，CellMarker还可以进行基因的搜索及其他功能，具体的可以查看：CellMarker：单细胞转录组测序定义细胞群体之利器 | 单细胞转录组专题）中提取的部分小鼠血液样本细胞类型及对应的marker基因（值得注意的是橙色标出的marker基因为在不同细胞类型中均表达量较高的基因，在后续的细胞亚型鉴定时选择细胞特异性表达的marker基因）：
+下表为按照上述方法从CellMarker（除了上面获得marker基因外，CellMarker还可以进行基因的搜索及其他功能，具体的可以查看：CellMarker：单细胞转录组测序定义细胞群体之利器 | 单细胞转录组专题）（https://www.sohu.com/a/323261235_769248 ）中提取的部分小鼠血液样本细胞类型及对应的marker基因（值得注意的是橙色标出的marker基因为在不同细胞类型中均表达量较高的基因，在后续的细胞亚型鉴定时选择细胞特异性表达的marker基因）：
+
 ![image](https://github.com/fengxiaZhou/NCP-scRNA-seq/raw/master/images/cellmarker_3.jfif)
 
 ### Step2 判断marker基因在各亚群中的表达情况
@@ -302,18 +305,21 @@ b.以T细胞为例，细胞对应的marker及支持材料数量（从高往低�
 
 a.基因表达小提琴图
 
-小提琴图横坐标为对应的细胞聚类tSNE图的cluster信息，纵坐标为相应marker基因的表达情况，图中的点代表细胞，从图中我们可以看到cluster0,2,3,5,6,10,13中大部分细胞均高表达CD19和Cd79b基因。可初步判断，cluster0,2,3,5,6,10,13为B细胞，当cluster和细胞特别多时，通过小提琴图没办法直接判断marker基因具体在哪些cluster中表达，可以同时结合marker基因在tSNE图（图b）进行细胞分类。
+小提琴图横坐标为对应的细胞聚类tSNE图的cluster信息，纵坐标为相应marker基因的表达情况，图中的点代表细胞，从图中我们可以看到cluster0,2,3,5,6,10,13中大部分细胞均高表达CD19和Cd79b基因。可初步判断，cluster0,2,3,5,6,10,13为B细胞，当cluster和细胞特别多时，通过小提琴图没办法直接判断marker基因具体在哪些cluster中表达，可以同时结合marker基因在tSNE图进行细胞分类。
+
 ![image](https://github.com/fengxiaZhou/NCP-scRNA-seq/raw/master/images/cellmarker_4.jfif)
 
 b.基因表达tSNE映射图
 
-基因表达tSNE映射图与细胞分类tSNE图中细胞对应的位置是一样的（图b中的点代表细胞），只是着色的方案不同，细胞分类tSNE图是按照细胞分类进行着色区分，基因表达tSNE图是按照目标基因在细胞中的表达高低进行着色，其中灰色表示目标基因在该细胞中不表达或表达量比较低，蓝色代表目标基因在该细胞中表达且颜色越深表达量越高。从图b中我们可以看出，CD19和Cd79b两个marker基因均集中在散点图的上半部分表达，对应细胞分类tSNE图，我们可以发现对应的cluster为0,2,3,5,6,10,13（即为图c左图红框圈出的部分）。
+基因表达tSNE映射图与细胞分类tSNE图中细胞对应的位置是一样的（图b中的点代表细胞），只是着色的方案不同，细胞分类tSNE图是按照细胞分类进行着色区分，基因表达tSNE图是按照目标基因在细胞中的表达高低进行着色，其中灰色表示目标基因在该细胞中不表达或表达量比较低，蓝色代表目标基因在该细胞中表达且颜色越深表达量越高。从图中我们可以看出，CD19和Cd79b两个marker基因均集中在散点图的上半部分表达，对应细胞分类tSNE图，我们可以发现对应的cluster为0,2,3,5,6,10,13（即为Step3图中左图红框圈出的部分）。
+
 ![image](https://github.com/fengxiaZhou/NCP-scRNA-seq/raw/master/images/cellmarker_5.jfif)
 
 结合基因表达小提琴图和TSNE映射图，我们可以判断cluster0,2,3,5,6,10,13即为B细胞。
 
 ### Step3 鉴定其他细胞
 使用相同的方法分别将T细胞，NK细胞，monocyte细胞，macropahage细胞鉴定出来，结果详见图中左图。从鉴定结果来看，cluster11使用已有的标记基因均未被鉴定到（这种可能是一种全新的未被报道的亚群，是后续关注的重点），而B细胞，T细胞分为很多亚类，对于这种情况有两种方式进行处理，方式一：基于B细胞，T细胞其他特异性表达基因，对两者进一步细分；方式二：将相同的细胞进行合并，统一标为T细胞或B细胞（图中右图），后续再单独将T细胞或B细胞挑出再次进行细分
+
 ![image](https://github.com/fengxiaZhou/NCP-scRNA-seq/raw/master/images/cellmarker_6.jfif)
 
 Reference: http://www.360doc31.net/wxarticlenew/846311936.html
