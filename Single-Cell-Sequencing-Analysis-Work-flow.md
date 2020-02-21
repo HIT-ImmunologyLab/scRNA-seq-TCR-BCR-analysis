@@ -97,7 +97,7 @@ Enter commands in R (or Rstudio, if installed)<br>
 		plot1 <- VariableFeaturePlot(pbmc)
 		plot2 <- LabelPoints(plot = plot1, points = top10, repel = TRUE)
 		CombinePlots(plots = list(plot1, plot2))
-![](https://github.com/gancao/NCP-scRNA-seq/blob/master/seurat_selection_variable_feature.png)
+![](https://github.com/gancao/NCP-scRNA-seq/blob/master/images/seurat_selection_variable_feature.png)
 
 - step5:Scaling the data, 归一化
 
@@ -139,7 +139,7 @@ Enter commands in R (or Rstudio, if installed)<br>
         DimPlot(pbmc, reduction = "umap")
         #save pbmc variable
         saveRDS(pbmc, file = "../output/pbmc_tutorial.rds")
-![](https://github.com/gancao/NCP-scRNA-seq/blob/master/seurat_cell_cluster.png)    
+![](https://github.com/gancao/NCP-scRNA-seq/blob/master/images/seurat_cell_cluster.png)    
 
 - step9:Finding differentially expressed features (cluster biomarkers), 选择marker gene 
     
@@ -160,7 +160,7 @@ Enter commands in R (or Rstudio, if installed)<br>
         #DoHeatmap generates an expression heatmap for given cells and features.
         top10 <- pbmc.markers %>% group_by(cluster) %>% top_n(n = 10, wt = avg_logFC)
         DoHeatmap(pbmc, features = top10$gene) + NoLegend()
-![](https://github.com/gancao/NCP-scRNA-seq/blob/master/seurat_expression_heatmap.png)
+![](https://github.com/gancao/NCP-scRNA-seq/blob/master/images/seurat_expression_heatmap.png)
 
 
 
@@ -172,7 +172,7 @@ Enter commands in R (or Rstudio, if installed)<br>
         pbmc <- RenameIdents(pbmc, new.cluster.ids)
         DimPlot(pbmc, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
         saveRDS(pbmc, file = "../output/pbmc3k_final.rds")
-![](https://github.com/gancao/NCP-scRNA-seq/blob/master/seurat_cell_type_classification.png) 
+![](https://github.com/gancao/NCP-scRNA-seq/blob/master/images/seurat_cell_type_classification.png) 
 
 
 ## 伪时间分析
