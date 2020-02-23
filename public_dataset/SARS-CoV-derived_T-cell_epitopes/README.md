@@ -4,4 +4,4 @@ Table 1. SARS-CoV-derived T-cell epitopes and their conservation in human corona
 ![image](https://github.com/HIT-ImmunologyLab/NCP-scRNA-seq/raw/master/images/zhoufx/SARS-antigen-epitope.png)
 
 ## Reference
-T-cell immunity of SARS-CoV: Implications for vaccine development against MERS-CoV(https://www.sciencedirect.com/science/article/pii/S0166354216304016?via%3Dihub)
+T-cell immunity of SARS-CoV: Implications for vaccine development against MERS-CoV (https://www.sciencedirect.com/science/article/pii/S0166354216304016?via%3Dihub)
