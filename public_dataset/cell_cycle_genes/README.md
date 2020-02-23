@@ -1,0 +1,5 @@
+## Description
+In order to separate the fast cycling cells from the slow cycling ones, we clustered them according to the expression of cell cycle genes (Fig. 1b). We ranked the cells according to the expression of aggregated G2/M genes as a measure of “cell cycle score”, thus reflecting the speed of the cell cycle (cell cycle gene list is provided in Additional file 3). We observed that the cells expressing higher amounts of G2/M genes were also significantly enriched in interleukin (IL)4 (p value = 0.008, Fisher’s exact test). In order to verify that those G2/M high cells were proliferating faster and were enriched in IL4 expression, we looked at the expression level of proliferation marker genes (from previous work [11, 12]). The cells enriched in those genes also expressed significantly higher amounts of IL4 (p value = 0.001, Fisher’s exact test), confirming that cytokine-producing cells are cycling faster (Additional file 1: Figure S1b).
+
+## Reference
+Single-cell analysis of CD4+ T-cell differentiation reveals three major cell states and progressive acceleration of proliferation (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4866375/)
