@@ -34,3 +34,11 @@
 **description**： The dataset contains T-cell Receptor Beta Chain sequences from blood of systemically healthy individuals of various ages (from cord blood to 103 years old, some donors are present in replicates). Individual cDNA molecules were labeled with an unique molecular identifier (UMI) tag prior to library preparation. Custom adapters with sample barcodes were used to multiplex samples, barcode sequences and instructions for de-multiplexing are available at https://github.com/mikessh/aging-study. Libraries were prepared according to our standardized protocol. <br>
 **sample size**: 8 UCB and 65 peripheral blood pair-end samples of 65 healthy individuals aged 6–103 years old including the 39 individuals previously published in Britanova et al.
 ![](https://github.com/gancao/NCP-scRNA-seq/blob/master/images/TCR_data4.png)
+
+##5. Immunosenescence: Immunity in the Young and Aged ##
+**reference:** [Diversity and clonal selection in the human T-cell repertoire](https://www.pnas.org/content/111/36/13139).<br>
+**data link:** https://www.ncbi.nlm.nih.gov/gap/?term=phs000787.v1.p1 <br>
+**ENA link:** https://www.ebi.ac.uk/ena/data/view/PRJNA258304 <br>
+**SRA ID:** SRP048661
+**description:** The study sequenced TCRB gene rearrangements from young versus elderly human subjects. Apheresis lymphocytes were obtained from four 20- to 35- and five 70- to 85-y-old healthy adults who were regular platelet donors. Naïve CD4 and CD8 T cells were purified by cell sorting. We used a stringent definition of naïve cells (CD3+CD4+ or CD8+CCR7+CD45RAhighCD28+) and very restrictive gating to ensure purity. Approximately 1.5–3 million sequence reads were obtained for each T-cell subset of each donor
+**sample size:** 210 pair-end TCR samples
