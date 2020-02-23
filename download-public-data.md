@@ -11,6 +11,9 @@
 ----------
 
 # TCR #
+
+![ligand_receptor_database](https://github.com/HIT-ImmunologyLab/NCP-scRNA-seq/raw/master/images/zhoufx/TCR_sequence.png)
+
 ## 1.Single-cell Map of Diverse Immune Phenotypes in the Breast Tumor Microenvironment - 5' RNA sequencing and TCR sequencing ##
 **reference:** [https://www.sciencedirect.com/science/article/pii/S0092867418307232](https://www.sciencedirect.com/science/article/pii/S0092867418307232 "Single-Cell Map of Diverse Immune Phenotypes in the Breast Tumor Microenvironment")<br>
 **NCBI GEO link**: [https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE114724](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE114724 "GSE114724")<br>
