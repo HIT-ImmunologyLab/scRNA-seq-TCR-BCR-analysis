@@ -27,7 +27,7 @@
 **description**: Here we performed paired single-cell RNA and T cell receptor sequencing on 79,046 cells from site-matched tumors from patients with basal or squamous cell carcinoma before and after anti-PD-1 therapy. In **single cell** sequencing condition, dissociated tumor samples were sorted as either CD45+ CD3+ tumor-infiltrating T cells, other CD45+ CD3- tumor-infiltrating lymphocytes and CD45- CD3- tumor/stromal cells. Sorted cells were subjected to paired single cell RNA- and TCR-sequencing on the droplet based 10X Genomics platform. In **bulk RNA** sequencing condition, CD4+ T helper cells were sorted as naive T cells (CD4+CD25-CD45RA+), Treg (CD4+CD25+IL7Rlo), Th1 (CD4+CD25-IL7RhiCD45RA-CXCR3+CCR6-), Th2 (CD4+CD25-IL7RhiCD45RA-CXCR3-CCR6-), Th17 (CD4+CD25-IL7RhiCD45RA-CXCR3-CCR6+), Th1-17 (CD4+CD25-IL7RhiCD45RA-CXCR3+CCR6+), and Tfh subsets (CXCR5+ counterparts of each). RNA-seq cDNA library construction was performed using the SMART-Seq v4 Ultra Low Input RNA Kit (Clontech) with 2 ng of input RNA. Sequencing libraries were prepared using the Nextera XT DNA Library Prep Kit (Illumina).    
 **sample size**: 86 single cell paired-end samples, 38 bulk RNA paired-end samples.
 
-## 4.Dynamics of Individual T Cell Repertoires: From Cord Blood to Centenarians
+## 3.Dynamics of Individual T Cell Repertoires: From Cord Blood to Centenarians
 **reference:** [Dynamics of Individual T Cell Repertoires: From Cord Blood to Centenarians](https://www.jimmunol.org/content/196/12/5005).<br>
 **SRA ID**: SRP072419 <br>
 **ENA link**: https://www.ebi.ac.uk/ena/data/view/PRJNA316572<br>
@@ -35,10 +35,10 @@
 **sample size**: 8 UCB and 65 peripheral blood pair-end samples of 65 healthy individuals aged 6–103 years old including the 39 individuals previously published in Britanova et al.
 ![](https://github.com/gancao/NCP-scRNA-seq/blob/master/images/TCR_data4.png)
 
-##5. Immunosenescence: Immunity in the Young and Aged ##
+## 4. Immunosenescence: Immunity in the Young and Aged ##
 **reference:** [Diversity and clonal selection in the human T-cell repertoire](https://www.pnas.org/content/111/36/13139).<br>
 **data link:** https://www.ncbi.nlm.nih.gov/gap/?term=phs000787.v1.p1 <br>
 **ENA link:** https://www.ebi.ac.uk/ena/data/view/PRJNA258304 <br>
-**SRA ID:** SRP048661
-**description:** The study sequenced TCRB gene rearrangements from young versus elderly human subjects. Apheresis lymphocytes were obtained from four 20- to 35- and five 70- to 85-y-old healthy adults who were regular platelet donors. Naïve CD4 and CD8 T cells were purified by cell sorting. We used a stringent definition of naïve cells (CD3+CD4+ or CD8+CCR7+CD45RAhighCD28+) and very restrictive gating to ensure purity. Approximately 1.5–3 million sequence reads were obtained for each T-cell subset of each donor
+**SRA ID:** SRP048661 <br>
+**description:** The study sequenced TCRB gene rearrangements from young versus elderly human subjects. Apheresis lymphocytes were obtained from four 20- to 35- and five 70- to 85-y-old healthy adults who were regular platelet donors. Naïve CD4 and CD8 T cells were purified by cell sorting. We used a stringent definition of naïve cells (CD3+CD4+ or CD8+CCR7+CD45RAhighCD28+) and very restrictive gating to ensure purity. Approximately 1.5–3 million sequence reads were obtained for each T-cell subset of each donor <br>
 **sample size:** 210 pair-end TCR samples
