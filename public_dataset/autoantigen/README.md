@@ -12,7 +12,8 @@ Potential Applications
 >Autoantigen identification for protein annoation.
 >Exploring immunological mechanisms of diseases.
 
-Reference: Jianbo Pan, Sheng Liu, Heng Zhu, Jiang Qian; AAgMarker 1.0: a resource of serological autoantigen biomarkers for clinical diagnosis and prognosis of various human diseases, Nucleic Acids Research, 2017, gkx770, https://doi.org/10.1093/nar/gkx770
+Reference: Jianbo Pan, Sheng Liu, Heng Zhu, Jiang Qian; AAgMarker 1.0: a resource of serological autoantigen biomarkers for clinical diagnosis and prognosis of various human diseases, Nucleic Acids Research, 2017, gkx770, https://doi.org/10.1093/nar/gkx770  
+Link:http://bioinfo.wilmer.jhu.edu/AAgMarker/
 
 # CTDatabase
 
@@ -28,7 +29,8 @@ While significant progress has been made in the development of experimental vacc
 
 This database is aimed at stimulating and providing a reference for further research on CT antigens. and comprises information about each CT gene, its gene products and the immune response induced in cancer patients by these proteins.
 
-If you would like to make contributions to or comment on the database please contact ctdatabase@lncc.br.
+If you would like to make contributions to or comment on the database please contact ctdatabase@lncc.br.  
+Link:http://www.cta.lncc.br/
 
 References
 
