@@ -11,7 +11,7 @@ cellranger mkfastq --id=tiny-bcl \
 
 `--csv`	(Optional) Path to a simple CSV with lane, sample, and index columns, which describe the way to demultiplex the flowcell. The index column should contain a 10x sample set name (e.g., SI-GA-A12 or the actual oligo sequence used). This is an alternative to the Illumina IEM sample sheet, and will be ignored if --samplesheet is specified.
 
-##Specifying Input FASTQs
+## Specifying Input FASTQs
  If you ran `mkfastq`, your files will be in a (MKFASTQ_ID)/outs/fastq_path folder, and your file hierarchy probably looks something like this:
 ```
 MKFASTQ_ID
@@ -46,7 +46,7 @@ MKFASTQ_ID
         `-- Undetermined_S0_L003_R2_001.fastq.gz
 ```
 
-##V(D)J T, B Cell Analysis
+## V(D)J T, B Cell Analysis
 To generate single-cell V(D)J sequences and annotations for a single library, run `cellranger vdj` with the following arguments. For a complete list of command-line arguments, run `cellranger vdj --help`.  
 ```
 $ cellranger vdj --id=sample345 \
@@ -150,7 +150,7 @@ consensus.fasta 	Clonotype consensus sequences 	Clonotype consensus sequences.
 consensus.fastq 	Clonotype consensus sequences 	Clonotype consensus sequences.
 concat_ref.fasta 	Concatenated germline segments 	Concatenated V(D)J germline segments for the segments detected on each consensus sequence. These serve as an approximate reference for each consensus sequence.
 ```
-####Quality scores  
+#### Quality scores  
 Typically, quality scores in a FASTQ file indicate the Phred-encoded probability that the base is correct. When a FASTQ file contains records for sequencing reads, the quality scores usually indicate the confidence of the base-caller at each base. Because `cellranger vdj` produces quality scores for assembled bases, the interpretation is slightly different.
 
 ```
@@ -159,9 +159,9 @@ filtered_contig.fastq 	Probability that the base is not a sequencing, PCR, or re
 all_contig.fastq 	Same as above.
 consensus.fastq 	Same as above, except the reads used to assemble all of the contigs used to produce the consensus are used.
 ```
-###V(D)J Annotations  
+### V(D)J Annotations  
 `cellranger vdj` pipeline produces V(D)J annotations on the assembled contigs and on the clonotype consensus sequences in multiple formats.  
-####File type overview  
+#### File type overview  
 ```
 File type 	Description
 CSV 	High-level annotations with one contig, consensus, or clonotype per row.
@@ -169,7 +169,7 @@ JSON 	Detailed annotations, including alignment coordinates and amino acid trans
 BED 	Germline V(D)J segments as features, for use with a tool like IGV.
 ```
 
-####Annotation files  
+#### Annotation files  
 ```
 File 	Description
 clonotypes.csv 	High-level descriptions of each clonotype.
@@ -177,7 +177,7 @@ consensus_annotations.{csv,json} 	High-level and detailed annotations of each cl
 filtered_contig_annotations.csv 	High-level annotations of each high-confidence, cellular contig. This is a subset of all_contig_annotations.csv.
 all_contig_annotations.{csv,bed,json} 	High-level and detailed annotations of each contig.
 ```
-####Clonotype CSV file (clonotypes.csv)
+#### Clonotype CSV file (clonotypes.csv)
 ```
 Column 	Description
 clonotype_id 	The ID of the clonotype to which this consensus sequence was assigned.
@@ -186,7 +186,7 @@ proportion 	The observed fraction of cell barcodes with this clonotype.
 cdr3s_aa 	A semicolon-delimited list of chain:sequence pairs, where "chain" is e.g., TRA, TRB, IGK, IGL, or IGH and "sequence" is the CDR3 amino acid sequence for that chain.
 cdr3s_nt 	A semicolon-delimited list of chain:sequence pairs, where "chain" is e.g., TRA, TRB, IGK, IGL, or IGH and "sequence" is the CDR3 nucleotide sequence for that chain.
 ```
-####Contig annotation CSV files (*contig_annotations.csv)  
+#### Contig annotation CSV files (*contig_annotations.csv)  
 ```
 Column 	Description
 barcode 	Cell-barcode for this contig.
@@ -208,13 +208,13 @@ umis 	The number of distinct UMIs aligned to this contig.
 raw_clonotype_id 	The ID of the clonotype to which this cell barcode was assigned.
 raw_consensus_id 	The ID of the consensus sequence to which this contig was assigned.
 ```
-####Consensus annotation CSV files (consensus_annotations.csv)
+#### Consensus annotation CSV files (consensus_annotations.csv)
 ```
 Column 	Description
 clonotype_id 	The ID of the clonotype to which this consensus sequence was assigned.
 consensus_id 	The ID of this consensus sequence.
 ```
-###Barcoded BAMs
+### Barcoded BAMs
 The `cellranger vdj` pipeline outputs several indexed BAM files. These files are primarily provided for use with a BAM visualization tool such as the Integrated Genome Viewer (IGV).
 ```
 File 	Records 	Reference 	Description
@@ -223,7 +223,7 @@ consensus.bam 	Contigs 	Clonotype consensus 	Each "reference" sequence is a clon
 concat_ref.bam 	Contigs 	Concatenated germline segments 	Each reference sequence is, for each clonotype consensus, the annotated germline segments concatenated together. This file shows how both the per-cell contigs and the clonotype consensus contig relate to the germline reference. This file is expected to reveal polymorphisms, somatic mutations, and recombination-induced differences such as non-templated nucleotide additions.
 ```
 The following assumes basic familiarity with the BAM format. More details on the SAM/BAM standard are available online.  
-####BAM Barcode Tags  
+#### BAM Barcode Tags  
 Chromium cell barcode and UMI information for each read is stored as `TAG` fields:
 ```
 Tag	Type	Description
@@ -240,14 +240,14 @@ The cell barcode `CB` tag includes a suffix with a dash separator followed by a 
 `AGAATGGTCTGCAT-1`
 
 This number denotes what we call a GEM group, and is used to virtualize barcodes in order to achieve a higher effective barcode diversity when combining samples generated from separate GEM chip channel runs. Normally, this number will be "1" across all barcodes when analyzing a sample generated from a single GEM chip channel. It can either be left in place and treated as part of a unique barcode identifier, or explicitly parsed out to leave only the barcode sequence itself.  
-####BAM CIGAR String  
+#### BAM CIGAR String  
 The `cellranger vdj` pipeline uses the = and X CIGAR string operations to indicate matches and mismatches, respectively. This contrasts with most aligners which simply report M for match/mismatch. The SAM/BAM standard supports both CIGAR formats. For more details please refer to the SAM/BAM standard.
 
-##V(D)J Secondary Analysis
-###Comparing clonotype frequencies
+## V(D)J Secondary Analysis
+### Comparing clonotype frequencies
 The most high-level file that describes the clonotype frequencies for a sample is `clonotypes.csv`. See Annotations for details on this file. In order to compare clonotype frequencies between samples, you can match clonotypes using the `cdrs_nt` column, which contains the paired CDR3 nucleotide sequences for each clonotype.
 
-###Inspecting consensus sequences  
+### Inspecting consensus sequences  
 Clonotype consensus sequences can be obtained from the `consensus.fastq` file, which also contains per-base quality scores.
 
 Reference: <https://support.10xgenomics.com/single-cell-vdj/software/pipelines/latest/analysis>
