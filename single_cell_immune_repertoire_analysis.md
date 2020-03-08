@@ -89,6 +89,10 @@ The `cellranger vdj` pipeline outputs a summary HTML file containing summary met
 The run summary can be viewed by clicking "Summary" in the top left corner. The summary metrics describe sequencing quality and various characteristics of the detected cells.  
 The number of cells detected, the mean read pairs per cell, and the number of V-J spanning productive paired cells are prominently displayed near the top of the page.
 
+![single-cell-vdj-web-summary-3.1](https://github.com/HIT-ImmunologyLab/NCP-scRNA-seq/raw/master/images/TCR/single-cell-vdj-web-summary-3.1.png) 
+
+The number of cells detected, the mean read pairs per cell, and the number of V-J spanning productive paired cells are prominently displayed near the top of the page.
+
 Click the '?' in the upper right corner of each dashboard for more information on each metric.
 
 The Barcode Rank Plot under the "Cells" dashboard shows the count of filtered UMIs mapped to each barcode. A barcode must have a contig that aligns to a V segment to be identified as a targeted cell. (In the denovo case, the only requirement is a contig's presence.) There must also be at least three filtered UMIs with at least two read pairs each. It is possible that a barcode with at least as many filtered UMIs as another cell-associated barcode is not identified as a targeted cell. The color of the graph is based on the local density of cell-associated barcodes.
@@ -100,6 +104,8 @@ The automated secondary analysis results can be viewed by clicking "Analysis" in
 * A table of the top 10 clonotypes, their cell counts, their proportions, and the their associated sets of CDR3 amino acid sequences.
 
 Note that because clonotypes are defined by productive sequences only, there are additional sequences that may not be displayed in the web summary. A more complete set of sequences associated with each cell can be found in the filtered contig files.
+
+![single-cell-vdj-web-summary-analysis-3.1](https://github.com/HIT-ImmunologyLab/NCP-scRNA-seq/raw/master/images/TCR/single-cell-vdj-web-summary-analysis-3.1.png)
 
 ### Summary Metrics  
 The `cellranger vdj` pipeline outputs `metrics_summary.csv` which contains a number of key metrics about the barcoding and sequencing process. Conventions for these metrics:
@@ -186,6 +192,9 @@ proportion 	The observed fraction of cell barcodes with this clonotype.
 cdr3s_aa 	A semicolon-delimited list of chain:sequence pairs, where "chain" is e.g., TRA, TRB, IGK, IGL, or IGH and "sequence" is the CDR3 amino acid sequence for that chain.
 cdr3s_nt 	A semicolon-delimited list of chain:sequence pairs, where "chain" is e.g., TRA, TRB, IGK, IGL, or IGH and "sequence" is the CDR3 nucleotide sequence for that chain.
 ```
+
+![clonotypes](https://github.com/HIT-ImmunologyLab/NCP-scRNA-seq/raw/master/images/TCR/clonotypes.png)
+
 #### Contig annotation CSV files (*contig_annotations.csv)  
 ```
 Column 	Description
@@ -208,12 +217,20 @@ umis 	The number of distinct UMIs aligned to this contig.
 raw_clonotype_id 	The ID of the clonotype to which this cell barcode was assigned.
 raw_consensus_id 	The ID of the consensus sequence to which this contig was assigned.
 ```
+
+![contig_annotation_1](https://github.com/HIT-ImmunologyLab/NCP-scRNA-seq/raw/master/images/TCR/contig_annotation_1.png)
+
+![contig_annotation_2](https://github.com/HIT-ImmunologyLab/NCP-scRNA-seq/raw/master/images/TCR/contig_annotation_2.png)
+
 #### Consensus annotation CSV files (consensus_annotations.csv)
 ```
 Column 	Description
 clonotype_id 	The ID of the clonotype to which this consensus sequence was assigned.
 consensus_id 	The ID of this consensus sequence.
 ```
+
+![consensus_annotations](https://github.com/HIT-ImmunologyLab/NCP-scRNA-seq/raw/master/images/TCR/consensus_annotations.png)
+
 ### Barcoded BAMs
 The `cellranger vdj` pipeline outputs several indexed BAM files. These files are primarily provided for use with a BAM visualization tool such as the Integrated Genome Viewer (IGV).
 ```
