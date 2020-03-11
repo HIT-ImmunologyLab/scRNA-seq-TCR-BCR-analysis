@@ -1,5 +1,5 @@
 ## Description
-- Public database of more than 37 million unique **BCR sequences** from **three healthy adult donor**s 
+- Public database of **more than 37 million unique BCR sequences** from **three healthy adult donor**s 
 - Publication date: **August 2, 2017**
 
 ## Reference
