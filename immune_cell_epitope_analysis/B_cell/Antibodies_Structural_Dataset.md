@@ -1,5 +1,5 @@
 ## Obtain solved 3D structures of antibodies
-- Solved 3D structures of antibodies in complex with their cognate antigen were obtained from **IEDB-3D** database using the search criteria “Receptor-type: BCR heavy-light”  
+- Solved 3D structures of antibodies in complex with their cognate antigen were obtained from **IEDB-3D** database using the search criteria **“Receptor-type: BCR heavy-light”**  
 - These results were combined with all the unpublished antibody-antigen structures deposited in the PDB, identified using the antibody specific Hidden Markov Models from **LYRA**
 - Entries of **antibodies interacting with other antibodies or T cell receptors** were **excluded**, as were entries where the **size of the antigen target was <60 amino acids** and **entries with a resolution worse than 3 Å**
 ## Reference
