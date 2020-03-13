@@ -38,6 +38,7 @@ Option name |	Argument example |	Description
 ‑c, ‑‑compress | 		| Compress sample-level summary output with GZIP.
 
 Database pre-filtering
+
 Option name |	Argument example |	Description 
 ---|---|---
 ‑S, ‑‑species	| human,mouse,etc |	(Required) Species name. All samples should belong to the same species, only one species is allowed.
@@ -47,6 +48,7 @@ Option name |	Argument example |	Description
 ‑‑min‑epi‑size | 10	| Minimal number of unique CDR3 sequences per epitope in VDJdb, filters underrepresented epitopes. Default is 10
 
 Using external database (advanced)
+
 Option name |	Argument example |	Description 
 ---|---|---
 ‑‑database | /path/to/my_db | Path and prefix of an external database. Should point to files with '.txt', and '.meta.txt' suffices (the database itself and database metadata).
@@ -55,6 +57,7 @@ Option name |	Argument example |	Description
 Full database contains extended info on method used to identify a given specific TCR and sample source, but has a higher degree of redundancy (several identical TCR:pMHC pairs from different publications, etc) that can complicate post-analysis.
 
 Scoring parameters
+
 Option name |	Argument example |	Description 
 ---|---|---
 ‑A, ‑‑scoring‑vdjmatch |		|Use full VDJMATCH algorithm that computes full alignment score as a function of CDR3 mutations (weighted with VDJAM scoring matrix) and pre-computed V/J segment match scores.
