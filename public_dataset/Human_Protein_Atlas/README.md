@@ -87,6 +87,57 @@ wget https://www.proteinatlas.org/download/proteinatlas.xml.gz
 </proteinAtlas>
 ```
 
+**proteinatlas antigen sequence obtained successfully (partial)**
+
+Total **16682 human protein** could obtain antigen sequence successfully, some proteins correspond to multiple antigenic sequences, so we obtain **24587 antigenic sequences**. All antigenic sequences details saved in [proteinatlas_antigensequence.faa](https://github.com/HIT-ImmunologyLab/NCP-scRNA-seq/blob/master/public_dataset/Human_Protein_Atlas/proteinatlas_antigensequence.faa). 
+
+```
+序列格式说明：
+>human protein ID | antibody ID
+antigen sequence
+```
+antigen sequence file (partial)
+
+```
+>TSPAN6|HPA004109
+NSFKNNYEKALKQYNSTGDYRSHAVDKIQNTLHCCGVTDYRDWTDTNYYSEKGFPKSCCKLEDCTPQRDADKVNNEG
+>TNMD|HPA034961
+GIEFDPMLDERGYCCIYCRRGNRYCRRVCEPLLGYYPYPYCYQGGRVICRV
+>TNMD|HPA055634
+KHFWPEVPKKAYDMEHTFYSNGEKKKIYMEIDPVTRTEIFRSGNGTDETLEVHDFKNGYTGIYFVGLQKCFIKTQIKVIPEF
+>DPM1|HPA051818
+SLEVSRSPRRSRRELEVRSPRQNKYSVLLPTYNERENLPLIVWLLVKSFSESGINYEIIIIDDGSPDGTRDVAEQLEKIYGSD
+>SCYL3|HPA005624
+PDWSEPEEPENQTVNIQIWPREPCDDVKSQCTTLDVEESSWDDCEPSSLDTKVNPGGGITATKPVTSAEQKPIPALLSLTEESMPWKSSLPQKISLVQRGDDADQIEPPKVSSQERPLKVPSELGLGEE
+```
+
+
+**proteinatlas antigen sequence failed to obtain (partial)**
+
+Some human protein failed  to obtain antigen sequence, All failed antigenic sequences details saved in [proteinatlas_failed_obtain_antigensequence_id.txt](https://github.com/HIT-ImmunologyLab/NCP-scRNA-seq/blob/master/public_dataset/Human_Protein_Atlas/proteinatlas_failed_obtain_antigensequence_id.txt).
+
+列名 | 含义
+---|---
+gene_id | human protein ID
+antibody_id | antibody ID，如果该列值为NA，则数据库中无antibody信息，如果该列值不为NA，则数据库中有antibody的ID信息，但无antigen sequence信息
+
+```
+gene_id	antibody_id
+CFH	CAB016385
+CFH	CAB016769
+GCLC	CAB009569
+WNT16	NA
+MAD1L1	CAB015338
+LASP1	CAB022049
+M6PR	CAB034464
+CASP10	CAB003780
+ARF5	NA
+PLXND1	CAB020819
+CD38	CAB002493
+CD38	CAB025255
+
+```
+
 
 ## Reference
 1. https://www.proteinatlas.org/about/download
