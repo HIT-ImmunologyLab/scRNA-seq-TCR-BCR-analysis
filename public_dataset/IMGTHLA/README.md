@@ -27,6 +27,16 @@ Tools Name | Tools Description
 Static text version of the sequence alignments are available from http://hla.alleles.org/ provided by the HLA Informatics Group)
 [Search Determinants](https://www.ebi.ac.uk/ipd/imgt/hla/searchdet.html) | A comparison of serarch determinants used by different registries (2007)
 
+## File
+
+
+File Name | File Description
+---|---
+[Allelelist.3390.txt](https://github.com/HIT-ImmunologyLab/NCP-scRNA-seq/blob/master/public_dataset/IMGTHLA/Allelelist.3390.txt) | Release Sequence List
+[version_report.txt](https://github.com/HIT-ImmunologyLab/NCP-scRNA-seq/blob/master/public_dataset/IMGTHLA/version_report.tx) | Version Report
+[hla_prot.fasta](https://github.com/HIT-ImmunologyLab/NCP-scRNA-seq/blob/master/public_dataset/IMGTHLA/hla_prot.fasta)|the amino acid sequence for all alleles
+[hla_nuc.fasta](https://github.com/HIT-ImmunologyLab/NCP-scRNA-seq/blob/master/public_dataset/IMGTHLA/hla_nuc.fasta)|the DNA sequence for the CDS sequence of all alleles
+
 ## Reference
 1. Article:  [IPD-IMGT/HLA Database. Nucleic Acids Research (2020) 48:D948-55](https://academic.oup.com/nar/article/48/D1/D948/5610347?searchresult=1)
 2. Website: [IPD-IMGT/HLA ](https://www.ebi.ac.uk/ipd/imgt/hla/)
