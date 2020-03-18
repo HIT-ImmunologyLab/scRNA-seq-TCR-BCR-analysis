@@ -22,8 +22,7 @@ Tools Name | Tools Description
 [KIR Ligand Calculator](https://www.ebi.ac.uk/ipd/kir/ligand.html) | Defines HLA-B and HLA-C ligand motifs associated with NK cell alloreactivity
 [Polymorphism Search Tool](https://www.ebi.ac.uk/ipd/imgt/hla/polymorph.html) | Search tool to identify polymorphic positions in HLA sequences
 [Probe and Primer Search](https://www.ebi.ac.uk/ipd/imgt/hla/probe.html) | Search tool for generating probe and primer hit tables
-[Sequence Alignments](https://www.ebi.ac.uk/ipd/imgt/hla/align.html) | Interactive sequence alignment tool with help page available.
-Static text version of the sequence alignments are available from http://hla.alleles.org/ provided by the HLA Informatics Group)
+[Sequence Alignments](https://www.ebi.ac.uk/ipd/imgt/hla/align.html) | Interactive sequence alignment tool with help page available. Static text version of the sequence alignments are available from http://hla.alleles.org/ provided by the HLA Informatics Group)
 [Search Determinants](https://www.ebi.ac.uk/ipd/imgt/hla/searchdet.html) | A comparison of serarch determinants used by different registries (2007)
 
 ## File
