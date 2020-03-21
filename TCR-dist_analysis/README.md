@@ -95,6 +95,22 @@ The results of the analysis are summarized in an html file and associated direct
 <filename>*web/index.html
 ```
 
+Note
+
+```
+    The pipeline has been tested on datasets as large as 5000 sequences, but it does start to get slow.
+    Eventually we would like to code some of the time-intensive steps in C/C++/other. If this would help
+    you, let me know!
+
+    CDR3 motif finding in particular is slow for larger datasets. If you have multiple cores available,
+    consider using the option:
+
+       --find_cdr3_motifs_in_parallel
+
+    Also, be aware of the --min_quality_for_singletons flag which can cause some (singleton) TCR clones
+    to be filtered out if they have bad sequence read quality scores. The default is 20.
+```
+
 ## Testing
 In the tcr-dist/ directory you can run the command
 
