@@ -69,7 +69,7 @@ python run_basic_analysis.py -h
 
 This script will run a pipeline of analysis tools starting from three possible input filetypes:
 ```
-- pair_seqs_file: A .tsv (tab-separated values) file with info on alpha and beta chain
+pair_seqs_file: A .tsv (tab-separated values) file with info on alpha and beta chain
        sequences and quality scores, epitope, subject, and id.
        Required fields: id epitope subject a_nucseq b_nucseq a_quals b_quals
        For further details, run "python read_pair_seqs.py -h"
@@ -80,11 +80,11 @@ This script will run a pipeline of analysis tools starting from three possible i
             on position in the file.
 
 
-- parsed_seqs_file: A processed sequence file with V and J genes assigned, CDR3s parsed, etc. Will be produced
+parsed_seqs_file: A processed sequence file with V and J genes assigned, CDR3s parsed, etc. Will be produced
        as an intermediate when you start from a pair_seqs_file and could be then reused to re-run downstream
        analyses. Could also be generated from the output of other tools (eg MIXCR, conversion scripts yet to come).
 
-- clones_file: A processed version of the parsed_seqs_file in which per-TCR probabilities have been assigned and
+clones_file: A processed version of the parsed_seqs_file in which per-TCR probabilities have been assigned and
        clones identified. One line per clone. Most of the scripts in the pipeline take a clones_file as input.
 ```
 Use the corresponding command line option to point to the type of file you have.
