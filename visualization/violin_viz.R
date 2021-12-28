@@ -48,8 +48,15 @@ violin_viz <- function(seurat_object,att_gene_list,group_by,result_dir,result_na
   ## get att gene expression dataframe
   att_exist_gene_list <- intersect(att_gene_list,rownames(all_gene_expression))
   print(setdiff(att_gene_list,rownames(all_gene_expression)))
-  att_gene_expression <- all_gene_expression[att_exist_gene_list,]
-  att_gene_expression <- data.frame(att_gene_expression)
+  if(length(att_exist_gene_list)==1){
+    att_gene_expression <- data.frame(gene=all_gene_expression[att_exist_gene_list[1],])
+    att_gene_expression <- t(as.matrix(att_gene_expression))
+    rownames(att_gene_expression) <- att_exist_gene_list
+    colnames(att_gene_expression) <- colnames(all_gene_expression)
+  }else{
+    att_gene_expression <- all_gene_expression[att_exist_gene_list,]
+    att_gene_expression <- data.frame(att_gene_expression)
+  }
   att_gene_expression$gene_name <- rownames(att_gene_expression)
   att_gene_expression_data <- melt(att_gene_expression)
   colnames(att_gene_expression_data) <- c("gene_name","cell_barcode","gene_expression")
@@ -57,19 +64,44 @@ violin_viz <- function(seurat_object,att_gene_list,group_by,result_dir,result_na
   if(group_by=="gene_list"){
     union_gene_list <- union(active_gene_list,inhibit_gene_list)
     status_gene_exist_list <- intersect(union_gene_list,rownames(all_gene_expression))
-    status_gene_expression <- all_gene_expression[status_gene_exist_list,]
+    if(length(status_gene_exist_list)==1){
+      status_gene_expression <- data.frame(gene=all_gene_expression[status_gene_exist_list[1],])
+      status_gene_expression <- t(as.matrix(status_gene_expression))
+      rownames(status_gene_expression) <- status_gene_exist_list
+      colnames(status_gene_expression) <- colnames(all_gene_expression)
+      
+    }else{
+      status_gene_expression <- all_gene_expression[status_gene_exist_list,]
+    }
     
-    active_barcode <- colnames(status_gene_expression)
-    for(i in 1:length(active_gene_list)){
-      cur_att_barcode <- colnames(status_gene_expression)[status_gene_expression[active_gene_list[i],]>0]
-      active_barcode <- intersect(cur_att_barcode,active_barcode)
+    
+    if(length(active_gene_list)>0){
+      active_barcode <- colnames(status_gene_expression)
+      for(i in 1:length(active_gene_list)){
+        cur_att_barcode <- colnames(status_gene_expression)[status_gene_expression[active_gene_list[i],]>0]
+        active_barcode <- intersect(cur_att_barcode,active_barcode)
+      }
+    }else{
+      active_barcode <- c()
     }
-    inhibit_barcode <- colnames(status_gene_expression)
-    for(i in 1:length(inhibit_gene_list)){
-      cur_att_barcode <- colnames(status_gene_expression)[status_gene_expression[inhibit_gene_list[i],]==0]
-      inhibit_barcode <- intersect(cur_att_barcode,inhibit_barcode)
+    
+    if(length(inhibit_gene_list) > 0){
+      inhibit_barcode <- colnames(status_gene_expression)
+      for(i in 1:length(inhibit_gene_list)){
+        cur_att_barcode <- colnames(status_gene_expression)[status_gene_expression[inhibit_gene_list[i],]==0]
+        inhibit_barcode <- intersect(cur_att_barcode,inhibit_barcode)
+      }
+    }else{
+      inhibit_barcode <- c()
     }
-    att_cell_barcode <- intersect(active_barcode,inhibit_barcode)
+    
+    if(length(active_barcode)==0){
+      att_cell_barcode <- inhibit_barcode
+    }else if(length(inhibit_barcode)==0){
+      att_cell_barcode <- active_barcode
+    }else{
+      att_cell_barcode <- intersect(active_barcode,inhibit_barcode)
+    }
     seurat_object@meta.data[rownames(seurat_object@meta.data),"att_genes_group"] <- "Att gene negative"
     seurat_object@meta.data[att_cell_barcode,"att_genes_group"] <- "Att gene positive"
     group_by <- "att_genes_group"
@@ -95,33 +127,26 @@ violin_viz <- function(seurat_object,att_gene_list,group_by,result_dir,result_na
 }
 
 ############################################# main function ############################################
-## 按cluster分组
-seurat_rds_file <- "donor_seurat_UMAP.rds"
+seurat_rds_file <- "/home/ganr/Fan/HBV_liver_new/NKT_add_nan_cells_recluster_res_1.5_dim_50/filter_confused_cells_UMAP/donor_seurat_UMAP.rds"
 seurat_object <- readRDS(seurat_rds_file)
+
 att_gene_list <- c("GZMB","GZMK","NCAM1","CTLA4","LAG3")
 group_by <- "seurat_clusters"
-result_dir <- "cluster_result"
-result_name_perfix <- "cluster"
-violin_viz(seurat_object,att_gene_list,group_by,result_dir,result_name_perfix)
-
-## 按group分组，指定做检验的分组，指定绘图顺序
-seurat_rds_file <- "donor_seurat_UMAP.rds"
-seurat_object <- readRDS(seurat_rds_file)
-att_gene_list <- c("GZMB","GZMK","NCAM1","CTLA4","LAG3")
 group_by <- "group_name"
-result_dir <- "group_result"
-result_name_perfix <- "group"
-my_comparisons <- list(c("IA","HC"),c("IT","HC"),c("IC","HC"))
-group_by_level_list <- c("IA","IT","IC","HC")
-violin_viz(seurat_object,att_gene_list,group_by,result_dir,result_name_perfix,group_by_level_list,my_comparisons)
-
-## 按照指定的基因分组
-seurat_rds_file <- "donor_seurat_UMAP.rds"
-seurat_object <- readRDS(seurat_rds_file)
-att_gene_list <- c("GZMB","GZMK","NCAM1","CTLA4","LAG3")
 group_by <- "gene_list"
+
 active_gene_list <- c("CD8A","CD8B")
 inhibit_gene_list <- c("CD4")
-result_dir <- "gene_list_result"
-result_name_perfix <- "gene_list"
-violin_viz(seurat_object,att_gene_list,group_by,result_dir,result_name_perfix,active_gene_list,inhibit_gene_list)
+result_dir <- "/home/zhoufx/test_pipeline/test_violion"
+result_name_perfix <- "test"
+violin_viz(seurat_object,att_gene_list,group_by,result_dir,result_name_perfix,group_by_level_list,active_gene_list,inhibit_gene_list,my_comparisons)
+
+
+att_gene_list <- c("GZMB","GZMK","NCAM1","CTLA4","LAG3")
+group_by <- "group_name"
+result_dir <- "/home/zhoufx/test_pipeline/test_violion"
+result_name_perfix <- "test"
+my_comparisons <- list(c("IA","HC"),c("IT","HC"),c("IC","HC"))
+group_by_level_list <- c("IA","IT","IC","HC")
+violin_viz(seurat_object,att_gene_list,group_by,result_dir,result_name_perfix,group_by_level_list,active_gene_list,inhibit_gene_list,my_comparisons)
+
