@@ -5,95 +5,174 @@ suppressMessages(library(RColorBrewer))
 
 
 
-plot_dotplot_col_item<- function(plot_data,title_label,x_label,y_label,legend_label,att_var_cont,num_transfor,group_by,group_item_level,result_dir,result_name_prefix,color_list=c()){
-  
-  if(att_var_cont=="Yes"){
-    if(num_transfor== "sqrt"){
-      plot_data$att_values <- sqrt(as.numeric(as.character(plot_data$att_values)))
-      if(group_by == "No"){
-        ggplot(plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
-          geom_point(size=0.1)+
-          # scale_color_continuous(low="#0A85D9",high="#FC011A")+
-          scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32))+
-          theme_bw()+
-          theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
-          ggtitle(label = title_label)+
-          theme(plot.title = element_text(hjust = 0.5))+
-          xlab(x_label)+
-          ylab(y_label)+
-          # guides(color=guide_legend(title = legend_label))
-          labs(color=legend_label)
-        save_file <- paste(result_dir,"/",result_name_prefix,"_sqrt_dotplot.pdf",sep = "")
-        ggsave(save_file,width = 6,height = 5,limitsize = F)
-      }else{
-        plist <- apply(as.matrix(group_item_level),1,function(x){
-          cur_plot_data <- plot_data[which(plot_data$group_var==x),]
-          ggplot(cur_plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
+plot_dotplot_col_item<- function(plot_data,title_label,x_label,y_label,xlim_min,xlim_max,ylim_min,ylim_max,scale_min,scale_max,legend_label,att_var_cont,num_transfor,group_by,group_item_level,result_dir,result_name_prefix,color_list=c()){
+  if(xlim_min==""|xlim_max==""|ylim_min==""|ylim_max==""){
+    if(att_var_cont=="Yes"){
+      if(num_transfor== "sqrt"){
+        plot_data$att_values <- sqrt(as.numeric(as.character(plot_data$att_values)))
+        if(group_by == "No"){
+          ggplot(plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
             geom_point(size=0.1)+
             # scale_color_continuous(low="#0A85D9",high="#FC011A")+
-            scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32))+
+            scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32),limits=c(as.numeric(scale_min),as.numeric(scale_max)))+
             theme_bw()+
             theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
-            ggtitle(label = x)+
+            ggtitle(label = title_label)+
             theme(plot.title = element_text(hjust = 0.5))+
             xlab(x_label)+
             ylab(y_label)+
             # guides(color=guide_legend(title = legend_label))
             labs(color=legend_label)
-        })
-        row_num <- ceiling(sqrt(length(group_item_level)))
-        col_num <- ceiling(sqrt(length(group_item_level)))
-        do.call(ggarrange,c(plist,nrow=row_num,ncol=col_num))
-        save_file <- paste(result_dir,"/",result_name_prefix,"_sqrt_group_by_",group_by,"_dotplot.pdf",sep = "")
-        ggsave(save_file,width = 6*col_num,height = 5*row_num,limitsize = F)
+          save_file <- paste(result_dir,"/",result_name_prefix,"_sqrt_dotplot.pdf",sep = "")
+          ggsave(save_file,width = 6,height = 5,limitsize = F)
+        }else{
+          plist <- apply(as.matrix(group_item_level),1,function(x){
+            cur_plot_data <- plot_data[which(plot_data$group_var==x),]
+            ggplot(cur_plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
+              geom_point(size=0.1)+
+              # scale_color_continuous(low="#0A85D9",high="#FC011A")+
+              scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32),limits=c(as.numeric(scale_min),as.numeric(scale_max)))+
+              theme_bw()+
+              theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
+              ggtitle(label = x)+
+              theme(plot.title = element_text(hjust = 0.5))+
+              xlab(x_label)+
+              ylab(y_label)+
+              # guides(color=guide_legend(title = legend_label))
+              labs(color=legend_label)
+          })
+          row_num <- ceiling(sqrt(length(group_item_level)))
+          col_num <- ceiling(sqrt(length(group_item_level)))
+          do.call(ggarrange,c(plist,nrow=row_num,ncol=col_num))
+          save_file <- paste(result_dir,"/",result_name_prefix,"_sqrt_group_by_",group_by,"_dotplot.pdf",sep = "")
+          ggsave(save_file,width = 6*col_num,height = 5*row_num,limitsize = F)
+        }
+        
+      }else if(num_transfor== "log2"){
+        save_file <- paste(result_dir,"/",result_name_prefix,"_log2_dotplot.pdf",sep = "")
+        plot_data$att_values <- log2(as.numeric(as.character(plot_data$att_values)))
+        if(group_by == "No"){
+          ggplot(plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
+            geom_point(size=0.1)+
+            # scale_color_continuous(low="#0A85D9",high="#FC011A")+
+            scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32),limits=c(as.numeric(scale_min),as.numeric(scale_max)))+
+            theme_bw()+
+            theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
+            ggtitle(label = title_label)+
+            theme(plot.title = element_text(hjust = 0.5))+
+            labs(color=legend_label)+
+            xlab(x_label)+
+            ylab(y_label)
+          ggsave(save_file,width = 6,height = 5,limitsize = F)
+        }else{
+          plist <- apply(as.matrix(group_item_level),1,function(x){
+            cur_plot_data <- plot_data[which(plot_data$group_var==x),]
+            ggplot(cur_plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
+              geom_point(size=0.1)+
+              # scale_color_continuous(low="#0A85D9",high="#FC011A")+
+              scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32),limits=c(as.numeric(scale_min),as.numeric(scale_max)))+
+              theme_bw()+
+              theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
+              theme(legend.title = legend_label)+
+              ggtitle(label = x)+
+              theme(plot.title = element_text(hjust = 0.5))+
+              labs(color=legend_label)+
+              xlab(x_label)+
+              ylab(y_label)
+          })
+          row_num <- ceiling(sqrt(length(group_item_level)))
+          col_num <- ceiling(sqrt(length(group_item_level)))
+          do.call(ggarrange,c(plist,nrow=row_num,ncol=col_num))
+          save_file <- paste(result_dir,"/",result_name_prefix,"_log2_group_by_",group_by,"_dotplot.pdf",sep = "")
+          ggsave(save_file,width = 6*col_num,height = 5*row_num,limitsize = F)
+        }
+      }else if(num_transfor== "log10"){
+        
+        plot_data$att_values <- log10(as.numeric(as.character(plot_data$att_values)))
+        if(group_by == "No"){
+          ggplot(plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
+            geom_point(size=0.1)+
+            # scale_color_continuous(low="#0A85D9",high="#FC011A")+
+            scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32),limits=c(as.numeric(scale_min),as.numeric(scale_max)))+
+            theme_bw()+
+            theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
+            ggtitle(label = title_label)+
+            theme(plot.title = element_text(hjust = 0.5))+
+            labs(color=legend_label)+
+            xlab(x_label)+
+            ylab(y_label)
+          save_file <- paste(result_dir,"/",result_name_prefix,"_log10_dotplot.pdf",sep = "")
+          ggsave(save_file,width = 6,height = 5,limitsize = F)
+        }else{
+          plist <- apply(as.matrix(group_item_level),1,function(x){
+            cur_plot_data <- plot_data[which(plot_data$group_var==x),]
+            ggplot(cur_plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
+              geom_point(size=0.1)+
+              # scale_color_continuous(low="#0A85D9",high="#FC011A")+
+              scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32),limits=c(as.numeric(scale_min),as.numeric(scale_max)))+
+              theme_bw()+
+              theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
+              ggtitle(label = x)+
+              theme(plot.title = element_text(hjust = 0.5))+
+              labs(color=legend_label)+
+              xlab(x_label)+
+              ylab(y_label)
+          })
+          row_num <- ceiling(sqrt(length(group_item_level)))
+          col_num <- ceiling(sqrt(length(group_item_level)))
+          do.call(ggarrange,c(plist,nrow=row_num,ncol=col_num))
+          save_file <- paste(result_dir,"/",result_name_prefix,"_log10_group_by_",group_by,"_dotplot.pdf",sep = "")
+          ggsave(save_file,width = 6*col_num,height = 5*row_num,limitsize = F)
+        }
+      }else if(num_transfor== "No"){
+        if(group_by == "No"){
+          ggplot(plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
+            geom_point(size=0.1)+
+            # scale_color_continuous(low="#0A85D9",high="#FC011A")+
+            scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32),limits=c(as.numeric(scale_min),as.numeric(scale_max)))+
+            theme_bw()+
+            theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
+            ggtitle(label = title_label)+
+            theme(plot.title = element_text(hjust = 0.5))+
+            labs(color=legend_label)+
+            xlab(x_label)+
+            ylab(y_label)
+          save_file <- paste(result_dir,"/",result_name_prefix,"_raw_value_dotplot.pdf",sep = "")
+          ggsave(save_file,width = 6,height = 5,limitsize = F)
+        }else{
+          plist <- apply(as.matrix(group_item_level),1,function(x){
+            cur_plot_data <- plot_data[which(plot_data$group_var==x),]
+            ggplot(cur_plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
+              geom_point(size=0.1)+
+              # scale_color_continuous(low="#0A85D9",high="#FC011A")+
+              scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32),limits=c(as.numeric(scale_min),as.numeric(scale_max)))+
+              theme_bw()+
+              theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
+              ggtitle(label = x)+
+              theme(plot.title = element_text(hjust = 0.5))+
+              labs(color=legend_label)+
+              xlab(x_label)+
+              ylab(y_label)
+          })
+          row_num <- ceiling(sqrt(length(group_item_level)))
+          col_num <- ceiling(sqrt(length(group_item_level)))
+          do.call(ggarrange,c(plist,nrow=row_num,ncol=col_num))
+          save_file <- paste(result_dir,"/",result_name_prefix,"_raw_value_group_by_",group_by,"_dotplot.pdf",sep = "")
+          ggsave(save_file,width = 6*col_num,height = 5*row_num,limitsize = F)
+        }
+      }
+    }else if(att_var_cont=="No"){
+      if(length(color_list)==0){
+        color_num <- length(unique(as.character(plot_data$att_values)))
+        getPalette <- colorRampPalette(brewer.pal(9,"Set1"))
+        color_list <- getPalette(color_num)
       }
       
-    }else if(num_transfor== "log2"){
-      save_file <- paste(result_dir,"/",result_name_prefix,"_log2_dotplot.pdf",sep = "")
-      plot_data$att_values <- log2(as.numeric(as.character(plot_data$att_values)))
-      if(group_by == "No"){
-        ggplot(plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
-          geom_point(size=0.1)+
-          # scale_color_continuous(low="#0A85D9",high="#FC011A")+
-          scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32))+
-          theme_bw()+
-          theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
-          ggtitle(label = title_label)+
-          theme(plot.title = element_text(hjust = 0.5))+
-          labs(color=legend_label)+
-          xlab(x_label)+
-          ylab(y_label)
-        ggsave(save_file,width = 6,height = 5,limitsize = F)
-      }else{
-        plist <- apply(as.matrix(group_item_level),1,function(x){
-          cur_plot_data <- plot_data[which(plot_data$group_var==x),]
-          ggplot(cur_plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
-            geom_point(size=0.1)+
-            # scale_color_continuous(low="#0A85D9",high="#FC011A")+
-            scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32))+
-            theme_bw()+
-            theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
-            theme(legend.title = legend_label)+
-            ggtitle(label = x)+
-            theme(plot.title = element_text(hjust = 0.5))+
-            labs(color=legend_label)+
-            xlab(x_label)+
-            ylab(y_label)
-        })
-        row_num <- ceiling(sqrt(length(group_item_level)))
-        col_num <- ceiling(sqrt(length(group_item_level)))
-        do.call(ggarrange,c(plist,nrow=row_num,ncol=col_num))
-        save_file <- paste(result_dir,"/",result_name_prefix,"_log2_group_by_",group_by,"_dotplot.pdf",sep = "")
-        ggsave(save_file,width = 6*col_num,height = 5*row_num,limitsize = F)
-      }
-    }else if(num_transfor== "log10"){
       
-      plot_data$att_values <- log10(as.numeric(as.character(plot_data$att_values)))
       if(group_by == "No"){
         ggplot(plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
           geom_point(size=0.1)+
-          # scale_color_continuous(low="#0A85D9",high="#FC011A")+
-          scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32))+
+          scale_color_manual(values = color_list)+
           theme_bw()+
           theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
           ggtitle(label = title_label)+
@@ -101,15 +180,14 @@ plot_dotplot_col_item<- function(plot_data,title_label,x_label,y_label,legend_la
           labs(color=legend_label)+
           xlab(x_label)+
           ylab(y_label)
-        save_file <- paste(result_dir,"/",result_name_prefix,"_log10_dotplot.pdf",sep = "")
+        save_file <- paste(result_dir,"/",result_name_prefix,"_discrete_dotplot.pdf",sep = "")
         ggsave(save_file,width = 6,height = 5,limitsize = F)
       }else{
         plist <- apply(as.matrix(group_item_level),1,function(x){
           cur_plot_data <- plot_data[which(plot_data$group_var==x),]
           ggplot(cur_plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
             geom_point(size=0.1)+
-            # scale_color_continuous(low="#0A85D9",high="#FC011A")+
-            scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32))+
+            scale_color_manual(values = getPalette(color_num))+
             theme_bw()+
             theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
             ggtitle(label = x)+
@@ -121,91 +199,231 @@ plot_dotplot_col_item<- function(plot_data,title_label,x_label,y_label,legend_la
         row_num <- ceiling(sqrt(length(group_item_level)))
         col_num <- ceiling(sqrt(length(group_item_level)))
         do.call(ggarrange,c(plist,nrow=row_num,ncol=col_num))
-        save_file <- paste(result_dir,"/",result_name_prefix,"_log10_group_by_",group_by,"_dotplot.pdf",sep = "")
-        ggsave(save_file,width = 6*col_num,height = 5*row_num,limitsize = F)
-      }
-    }else if(num_transfor== "No"){
-      if(group_by == "No"){
-        ggplot(plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
-          geom_point(size=0.1)+
-          # scale_color_continuous(low="#0A85D9",high="#FC011A")+
-          scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32))+
-          theme_bw()+
-          theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
-          ggtitle(label = title_label)+
-          theme(plot.title = element_text(hjust = 0.5))+
-          labs(color=legend_label)+
-          xlab(x_label)+
-          ylab(y_label)
-        save_file <- paste(result_dir,"/",result_name_prefix,"_raw_value_dotplot.pdf",sep = "")
-        ggsave(save_file,width = 6,height = 5,limitsize = F)
-      }else{
-        plist <- apply(as.matrix(group_item_level),1,function(x){
-          cur_plot_data <- plot_data[which(plot_data$group_var==x),]
-          ggplot(cur_plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
-            geom_point(size=0.1)+
-            # scale_color_continuous(low="#0A85D9",high="#FC011A")+
-            scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32))+
-            theme_bw()+
-            theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
-            ggtitle(label = x)+
-            theme(plot.title = element_text(hjust = 0.5))+
-            labs(color=legend_label)+
-            xlab(x_label)+
-            ylab(y_label)
-        })
-        row_num <- ceiling(sqrt(length(group_item_level)))
-        col_num <- ceiling(sqrt(length(group_item_level)))
-        do.call(ggarrange,c(plist,nrow=row_num,ncol=col_num))
-        save_file <- paste(result_dir,"/",result_name_prefix,"_raw_value_group_by_",group_by,"_dotplot.pdf",sep = "")
+        save_file <- paste(result_dir,"/",result_name_prefix,"_discrete_group_by_",group_by,"_dotplot.pdf",sep = "")
         ggsave(save_file,width = 6*col_num,height = 5*row_num,limitsize = F)
       }
     }
-  }else if(att_var_cont=="No"){
-    if(length(color_list)==0){
-      color_num <- length(unique(as.character(plot_data$att_values)))
-      getPalette <- colorRampPalette(brewer.pal(9,"Set1"))
-      color_list <- getPalette(color_num)
-    }
-   
-    
-    if(group_by == "No"){
-      ggplot(plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
-        geom_point(size=0.1)+
-        scale_color_manual(values = color_list)+
-        theme_bw()+
-        theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
-        ggtitle(label = title_label)+
-        theme(plot.title = element_text(hjust = 0.5))+
-        labs(color=legend_label)+
-        xlab(x_label)+
-        ylab(y_label)
-      save_file <- paste(result_dir,"/",result_name_prefix,"_discrete_dotplot.pdf",sep = "")
-      ggsave(save_file,width = 6,height = 5,limitsize = F)
-    }else{
-      plist <- apply(as.matrix(group_item_level),1,function(x){
-        cur_plot_data <- plot_data[which(plot_data$group_var==x),]
-        ggplot(cur_plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
+  }else{
+    if(att_var_cont=="Yes"){
+      if(num_transfor== "sqrt"){
+        plot_data$att_values <- sqrt(as.numeric(as.character(plot_data$att_values)))
+        if(group_by == "No"){
+          ggplot(plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
+            geom_point(size=0.1)+
+            # scale_color_continuous(low="#0A85D9",high="#FC011A")+
+            scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32),limits=c(as.numeric(scale_min),as.numeric(scale_max)))+
+            theme_bw()+
+            theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
+            ggtitle(label = title_label)+
+            theme(plot.title = element_text(hjust = 0.5))+
+            xlab(x_label)+
+            ylab(y_label)+
+            xlim(as.numeric(xlim_min),as.numeric(xlim_max))+
+            ylim(as.numeric(ylim_min),as.numeric(ylim_max))+
+            # guides(color=guide_legend(title = legend_label))
+            labs(color=legend_label)
+          save_file <- paste(result_dir,"/",result_name_prefix,"_sqrt_dotplot.pdf",sep = "")
+          ggsave(save_file,width = 6,height = 5,limitsize = F)
+        }else{
+          plist <- apply(as.matrix(group_item_level),1,function(x){
+            cur_plot_data <- plot_data[which(plot_data$group_var==x),]
+            ggplot(cur_plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
+              geom_point(size=0.1)+
+              # scale_color_continuous(low="#0A85D9",high="#FC011A")+
+              scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32),limits=c(as.numeric(scale_min),as.numeric(scale_max)))+
+              theme_bw()+
+              theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
+              ggtitle(label = x)+
+              theme(plot.title = element_text(hjust = 0.5))+
+              xlab(x_label)+
+              ylab(y_label)+
+              xlim(as.numeric(xlim_min),as.numeric(xlim_max))+
+              ylim(as.numeric(ylim_min),as.numeric(ylim_max))+
+              # guides(color=guide_legend(title = legend_label))
+              labs(color=legend_label)
+          })
+          row_num <- ceiling(sqrt(length(group_item_level)))
+          col_num <- ceiling(sqrt(length(group_item_level)))
+          do.call(ggarrange,c(plist,nrow=row_num,ncol=col_num))
+          save_file <- paste(result_dir,"/",result_name_prefix,"_sqrt_group_by_",group_by,"_dotplot.pdf",sep = "")
+          ggsave(save_file,width = 6*col_num,height = 5*row_num,limitsize = F)
+        }
+        
+      }else if(num_transfor== "log2"){
+        save_file <- paste(result_dir,"/",result_name_prefix,"_log2_dotplot.pdf",sep = "")
+        plot_data$att_values <- log2(as.numeric(as.character(plot_data$att_values)))
+        if(group_by == "No"){
+          ggplot(plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
+            geom_point(size=0.1)+
+            # scale_color_continuous(low="#0A85D9",high="#FC011A")+
+            scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32),limits=c(as.numeric(scale_min),as.numeric(scale_max)))+
+            theme_bw()+
+            theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
+            ggtitle(label = title_label)+
+            theme(plot.title = element_text(hjust = 0.5))+
+            labs(color=legend_label)+
+            xlab(x_label)+
+            ylab(y_label)+
+            xlim(as.numeric(xlim_min),as.numeric(xlim_max))+
+            ylim(as.numeric(ylim_min),as.numeric(ylim_max))
+          ggsave(save_file,width = 6,height = 5,limitsize = F)
+        }else{
+          plist <- apply(as.matrix(group_item_level),1,function(x){
+            cur_plot_data <- plot_data[which(plot_data$group_var==x),]
+            ggplot(cur_plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
+              geom_point(size=0.1)+
+              # scale_color_continuous(low="#0A85D9",high="#FC011A")+
+              scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32),limits=c(as.numeric(scale_min),as.numeric(scale_max)))+
+              theme_bw()+
+              theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
+              theme(legend.title = legend_label)+
+              ggtitle(label = x)+
+              theme(plot.title = element_text(hjust = 0.5))+
+              labs(color=legend_label)+
+              xlab(x_label)+
+              ylab(y_label)+
+              xlim(as.numeric(xlim_min),as.numeric(xlim_max))+
+              ylim(as.numeric(ylim_min),as.numeric(ylim_max))
+          })
+          row_num <- ceiling(sqrt(length(group_item_level)))
+          col_num <- ceiling(sqrt(length(group_item_level)))
+          do.call(ggarrange,c(plist,nrow=row_num,ncol=col_num))
+          save_file <- paste(result_dir,"/",result_name_prefix,"_log2_group_by_",group_by,"_dotplot.pdf",sep = "")
+          ggsave(save_file,width = 6*col_num,height = 5*row_num,limitsize = F)
+        }
+      }else if(num_transfor== "log10"){
+        
+        plot_data$att_values <- log10(as.numeric(as.character(plot_data$att_values)))
+        if(group_by == "No"){
+          ggplot(plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
+            geom_point(size=0.1)+
+            # scale_color_continuous(low="#0A85D9",high="#FC011A")+
+            scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32),limits=c(as.numeric(scale_min),as.numeric(scale_max)))+
+            theme_bw()+
+            theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
+            ggtitle(label = title_label)+
+            theme(plot.title = element_text(hjust = 0.5))+
+            labs(color=legend_label)+
+            xlab(x_label)+
+            ylab(y_label)+
+            xlim(as.numeric(xlim_min),as.numeric(xlim_max))+
+            ylim(as.numeric(ylim_min),as.numeric(ylim_max))
+          save_file <- paste(result_dir,"/",result_name_prefix,"_log10_dotplot.pdf",sep = "")
+          ggsave(save_file,width = 6,height = 5,limitsize = F)
+        }else{
+          plist <- apply(as.matrix(group_item_level),1,function(x){
+            cur_plot_data <- plot_data[which(plot_data$group_var==x),]
+            ggplot(cur_plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
+              geom_point(size=0.1)+
+              # scale_color_continuous(low="#0A85D9",high="#FC011A")+
+              scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32),limits=c(as.numeric(scale_min),as.numeric(scale_max)))+
+              theme_bw()+
+              theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
+              ggtitle(label = x)+
+              theme(plot.title = element_text(hjust = 0.5))+
+              labs(color=legend_label)+
+              xlab(x_label)+
+              ylab(y_label)+
+              xlim(as.numeric(xlim_min),as.numeric(xlim_max))+
+              ylim(as.numeric(ylim_min),as.numeric(ylim_max))
+          })
+          row_num <- ceiling(sqrt(length(group_item_level)))
+          col_num <- ceiling(sqrt(length(group_item_level)))
+          do.call(ggarrange,c(plist,nrow=row_num,ncol=col_num))
+          save_file <- paste(result_dir,"/",result_name_prefix,"_log10_group_by_",group_by,"_dotplot.pdf",sep = "")
+          ggsave(save_file,width = 6*col_num,height = 5*row_num,limitsize = F)
+        }
+      }else if(num_transfor== "No"){
+        if(group_by == "No"){
+          ggplot(plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
+            geom_point(size=0.1)+
+            # scale_color_continuous(low="#0A85D9",high="#FC011A")+
+            scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32),limits=c(as.numeric(scale_min),as.numeric(scale_max)))+
+            theme_bw()+
+            theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
+            ggtitle(label = title_label)+
+            theme(plot.title = element_text(hjust = 0.5))+
+            labs(color=legend_label)+
+            xlab(x_label)+
+            ylab(y_label)+
+            xlim(as.numeric(xlim_min),as.numeric(xlim_max))+
+            ylim(as.numeric(ylim_min),as.numeric(ylim_max))
+          save_file <- paste(result_dir,"/",result_name_prefix,"_raw_value_dotplot.pdf",sep = "")
+          ggsave(save_file,width = 6,height = 5,limitsize = F)
+        }else{
+          plist <- apply(as.matrix(group_item_level),1,function(x){
+            cur_plot_data <- plot_data[which(plot_data$group_var==x),]
+            ggplot(cur_plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
+              geom_point(size=0.1)+
+              # scale_color_continuous(low="#0A85D9",high="#FC011A")+
+              scale_color_gradientn(colours = colorRampPalette(rev(brewer.pal(11,'Spectral')))(32),limits=c(as.numeric(scale_min),as.numeric(scale_max)))+
+              theme_bw()+
+              theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
+              ggtitle(label = x)+
+              theme(plot.title = element_text(hjust = 0.5))+
+              labs(color=legend_label)+
+              xlab(x_label)+
+              ylab(y_label)+
+              xlim(as.numeric(xlim_min),as.numeric(xlim_max))+
+              ylim(as.numeric(ylim_min),as.numeric(ylim_max))
+          })
+          row_num <- ceiling(sqrt(length(group_item_level)))
+          col_num <- ceiling(sqrt(length(group_item_level)))
+          do.call(ggarrange,c(plist,nrow=row_num,ncol=col_num))
+          save_file <- paste(result_dir,"/",result_name_prefix,"_raw_value_group_by_",group_by,"_dotplot.pdf",sep = "")
+          ggsave(save_file,width = 6*col_num,height = 5*row_num,limitsize = F)
+        }
+      }
+    }else if(att_var_cont=="No"){
+      if(length(color_list)==0){
+        color_num <- length(unique(as.character(plot_data$att_values)))
+        getPalette <- colorRampPalette(brewer.pal(9,"Set1"))
+        color_list <- getPalette(color_num)
+      }
+      
+      
+      if(group_by == "No"){
+        ggplot(plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
           geom_point(size=0.1)+
-          scale_color_manual(values = getPalette(color_num))+
+          scale_color_manual(values = color_list)+
           theme_bw()+
           theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
-          ggtitle(label = x)+
+          ggtitle(label = title_label)+
           theme(plot.title = element_text(hjust = 0.5))+
           labs(color=legend_label)+
           xlab(x_label)+
-          ylab(y_label)
-      })
-      row_num <- ceiling(sqrt(length(group_item_level)))
-      col_num <- ceiling(sqrt(length(group_item_level)))
-      do.call(ggarrange,c(plist,nrow=row_num,ncol=col_num))
-      save_file <- paste(result_dir,"/",result_name_prefix,"_discrete_group_by_",group_by,"_dotplot.pdf",sep = "")
-      ggsave(save_file,width = 6*col_num,height = 5*row_num,limitsize = F)
+          ylab(y_label)+
+          xlim(as.numeric(xlim_min),as.numeric(xlim_max))+
+          ylim(as.numeric(ylim_min),as.numeric(ylim_max))
+        save_file <- paste(result_dir,"/",result_name_prefix,"_discrete_dotplot.pdf",sep = "")
+        ggsave(save_file,width = 6,height = 5,limitsize = F)
+      }else{
+        plist <- apply(as.matrix(group_item_level),1,function(x){
+          cur_plot_data <- plot_data[which(plot_data$group_var==x),]
+          ggplot(cur_plot_data,aes(x=x_coord,y=y_coord,color=att_values))+
+            geom_point(size=0.1)+
+            scale_color_manual(values = getPalette(color_num))+
+            theme_bw()+
+            theme(panel.grid.major = element_blank(),panel.grid.minor = element_blank())+
+            ggtitle(label = x)+
+            theme(plot.title = element_text(hjust = 0.5))+
+            labs(color=legend_label)+
+            xlab(x_label)+
+            ylab(y_label)+
+            xlim(as.numeric(xlim_min),as.numeric(xlim_max))+
+            ylim(as.numeric(ylim_min),as.numeric(ylim_max))
+        })
+        row_num <- ceiling(sqrt(length(group_item_level)))
+        col_num <- ceiling(sqrt(length(group_item_level)))
+        do.call(ggarrange,c(plist,nrow=row_num,ncol=col_num))
+        save_file <- paste(result_dir,"/",result_name_prefix,"_discrete_group_by_",group_by,"_dotplot.pdf",sep = "")
+        ggsave(save_file,width = 6*col_num,height = 5*row_num,limitsize = F)
+      }
     }
   }
 }
 
-dotplot_viz <- function(seurat_object,reduction_method,result_dir,result_name_prefix,analysis_type,att_gene_list=c(),active_gene_list=c(),inhibit_gene_list=c(),att_var_name="",att_var_cont="No",title_label="",legend_label="",num_transfor="No",group_by="group_name",group_item_level){
+dotplot_viz <- function(seurat_object,reduction_method,result_dir,result_name_prefix,analysis_type,xlim_min="",xlim_max="",ylim_min="",ylim_max="",scale_min="",scale_max="",att_gene_list=c(),active_gene_list=c(),inhibit_gene_list=c(),att_var_name="",att_var_cont="No",title_label="",legend_label="",num_transfor="No",group_by="group_name",group_item_level){
   if(analysis_type == "exist column"){
     if(att_var_name != ""){
       if(reduction_method == "UMAP"){
@@ -252,7 +470,7 @@ dotplot_viz <- function(seurat_object,reduction_method,result_dir,result_name_pr
         legend_label <- att_var_name
       }
       cur_result_name_prefix <- paste(result_name_prefix,"_exist_column_",att_var_name,sep = "")
-      plot_dotplot_col_item(plot_data,title_label,x_label,y_label,legend_label,att_var_cont,num_transfor,group_by,group_item_level,result_dir,cur_result_name_prefix)
+      plot_dotplot_col_item(plot_data,title_label,x_label,y_label,xlim_min,xlim_max,ylim_min,ylim_max,scale_min,scale_max,legend_label,att_var_cont,num_transfor,group_by,group_item_level,result_dir,cur_result_name_prefix)
     }
   }
  
@@ -323,7 +541,7 @@ dotplot_viz <- function(seurat_object,reduction_method,result_dir,result_name_pr
       plot_data$att_values <- as.numeric(as.character(plot_data$att_values))
       cur_result_name_prefix <- paste(result_name_prefix,"_att_gene_score",sep = "")
       att_var_cont <- "Yes"
-      plot_dotplot_col_item(plot_data,title_label,x_label,y_label,legend_label,att_var_cont,num_transfor,group_by,group_item_level,result_dir,cur_result_name_prefix)
+      plot_dotplot_col_item(plot_data,title_label,x_label,y_label,xlim_min,xlim_max,ylim_min,ylim_max,scale_min,scale_max,legend_label,att_var_cont,num_transfor,group_by,group_item_level,result_dir,cur_result_name_prefix)
     }
   }
   
@@ -421,7 +639,7 @@ dotplot_viz <- function(seurat_object,reduction_method,result_dir,result_name_pr
       att_var_cont <- "No"
       num_transfor <- "No"
       color_list <- c("#E41A1C","0xff808080")
-      plot_dotplot_col_item(plot_data,title_label,x_label,y_label,legend_label,att_var_cont,num_transfor,group_by,group_item_level,result_dir,cur_result_name_prefix,color_list)
+      plot_dotplot_col_item(plot_data,title_label,x_label,y_label,xlim_min,xlim_max,ylim_min,ylim_max,scale_min,scale_max,legend_label,att_var_cont,num_transfor,group_by,group_item_level,result_dir,cur_result_name_prefix,color_list)
     }
   }
   
@@ -443,6 +661,15 @@ group_by <- "group_name"
 group_item_level <- c("IA","IT","IC","HC")
 analysis_type <- "exist column"
 dotplot_viz(seurat_object,reduction_method,result_dir,result_name_prefix,analysis_type,title_label=title_label,att_var_name=att_var_name,
+            att_var_cont=att_var_cont,legend_label=legend_label,group_by=group_by,group_item_level=group_item_level)
+xlim_min <- -6
+xlim_max <- 6
+ylim_min <- -7
+ylim_max <- 13
+scale_min <- -1
+scale_max <- 1000
+dotplot_viz(seurat_object,reduction_method,result_dir,result_name_prefix,analysis_type,xlim_min=xlim_min,xlim_max=xlim_max,
+            ylim_min=ylim_min,ylim_max=ylim_max,scale_min=scale_min,scale_max=scale_max,title_label=title_label,att_var_name=att_var_name,
             att_var_cont=att_var_cont,legend_label=legend_label,group_by=group_by,group_item_level=group_item_level)
 
 
@@ -469,7 +696,15 @@ num_transfor <- "sqrt"
 group_by <- "group_name"
 group_item_level <- c("IA","IT","IC","HC")
 analysis_type <- "exist column"
-dotplot_viz(seurat_object,reduction_method,result_dir,result_name_prefix,analysis_type,title_label=title_label,att_var_name=att_var_name,
+xlim_min <- -6
+xlim_max <- 6
+ylim_min <- -7
+ylim_max <- 13
+scale_min <- -1
+scale_max <- 10000
+dotplot_viz(seurat_object,reduction_method,result_dir,result_name_prefix,analysis_type,
+            xlim_min=xlim_min,xlim_max=xlim_max,ylim_min=ylim_min,ylim_max=ylim_max,scale_min=scale_min,scale_max=scale_max,
+            title_label=title_label,att_var_name=att_var_name,
             att_var_cont=att_var_cont,legend_label=legend_label,num_transfor=num_transfor,group_by=group_by,group_item_level=group_item_level)
 
 reduction_method <- "UMAP"
