@@ -19,10 +19,10 @@ plot_att_gene_vlnplot <- function(att_gene_expression,result_dir,save_file_prefi
     }
   }
   
-  ggplot(att_gene_expression)+
+  v_plot <- ggplot(att_gene_expression)+
     # geom_violin(aes(x=cell_seurat_clusters,y=gene_expression,fill=color_group))+
     geom_violin(aes(x=color_group,y=gene_expression,fill=color_group),width=1,position=position_dodge(1))+
-    # geom_boxplot(aes(x=color_group,y=gene_expression),width=0.1,position=position_dodge(0.9),outlier.colour = NA,fill="white")+
+    geom_boxplot(aes(x=color_group,y=gene_expression),notch = T,width=0.3,position=position_dodge(1),outlier.colour = NA,fill="0x00A4A4A4",color="black")+
     facet_wrap(att_gene_expression$gene_name~.,scales = "free_x",ncol = 1)+
     # scale_x_discrete("")+
     # scale_y_discrete("")+
@@ -35,8 +35,67 @@ plot_att_gene_vlnplot <- function(att_gene_expression,result_dir,save_file_prefi
     geom_signif(aes(x=color_group,y=gene_expression),comparisons = my_comparisons,step_increase = 0.1,map_signif_level = F,
                 test = wilcox.test,size=0.5,textsize = 4)
   
+  fraction_index1=which(att_gene_expression$gene_expression>0)
+  fraction_index2=which(att_gene_expression$gene_expression<=0)
+  focus_gene=matrix(data=0,nr=nrow(att_gene_expression),nc=1)
+  focus_gene[fraction_index1,]="active"
+  focus_gene[fraction_index2,]="no_expression"
+  colnames(focus_gene)="focus_gene"
+  att_gene_expression=(cbind(att_gene_expression,focus_gene))
+  
+  percent=aggregate(att_gene_expression[,"focus_gene"],
+                    by=list(color_group=att_gene_expression$color_group,gene_name=att_gene_expression$gene_name),table)
+  percent=as.matrix(percent)
+  percent=as.data.frame(percent)
+  percent[,3]=as.numeric(as.character(percent[,3]))
+  percent[,4]=as.numeric(as.character(percent[,4]))
+  
+  percent_active=percent[,3]/(percent[,3]+percent[,4])
+  percent_no_expression=percent[,4]/(percent[,3]+percent[,4])
+  
+  percent=cbind(percent,percent_active,percent_no_expression)
+  percent_result=matrix(nr=nrow(att_gene_expression),nc=1,data=0)
+  colnames(percent_result)="percent_result"
+  
+  num_result=matrix(nr=nrow(att_gene_expression),nc=1,data=0)
+  colnames(num_result)="num_result"
+  
+  for(i in 1:nrow(att_gene_expression)){
+    
+    index_gene_name=which(att_gene_expression$gene_name[i]==percent$gene_name)
+    index_color_group=which(att_gene_expression$color_group[i]==percent$color_group)
+    index=intersect(index_gene_name,index_color_group)
+    
+    if(att_gene_expression$focus_gene[i]=="no_expression"){
+      percent_result[i,]=percent$percent_no_expression[index]
+      num_result[i,]=percent$x.no_expression[index]
+    }else if(att_gene_expression$focus_gene[i]=="active"){
+      percent_result[i,]=percent$percent_active[index]
+      num_result[i,]=percent$x.active[index]
+      
+    }
+  }
+  lable=paste(round(percent_result,2)*100,"%",sep="")
+  lable=paste(num_result,lable,sep="~")
+  
+  att_gene_expression=cbind(att_gene_expression,lable)
+  
+  
+  
+  b_plot=ggplot(data=att_gene_expression, mapping=aes(x=color_group,fill=focus_gene))+
+    geom_bar(stat="count",width=0.5,position='stack')+
+    facet_wrap(att_gene_expression$gene_name~.,scales = "free_x",ncol = 1)+
+    scale_fill_manual(values=c('#999999','#E69F00'))+
+    geom_text(stat='count',aes(label=lable), color="black", size=3.5,position=position_stack(0.5))+
+    theme(axis.text.x.bottom = element_text(angle = 45,hjust = 1,vjust = 1),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank())
+  
+  
+  ggarrange(v_plot,b_plot)
+  
   save_file <- paste(result_dir,"/",save_file_prefix,"_violin_color_by_",color_name,".pdf",sep = "")
-  ggsave(save_file,width = max(3,length(group_list)*2),height = gene_num*3,limitsize = FALSE)
+  ggsave(save_file,width = max(3,length(group_list)*4),height = gene_num*8,limitsize = FALSE)
   
   save_file <- paste(result_dir,"/",save_file_prefix,"_expression_melt_color_by_",color_name,".csv",sep = "")
   write.csv(att_gene_expression,save_file,quote = F)
@@ -122,6 +181,7 @@ violin_viz <- function(seurat_object,att_gene_list,group_by,result_dir,result_na
   barcode_list <- att_gene_expression_data[rownames(att_gene_expression_data),"cell_barcode"]
   att_gene_expression_data[rownames(att_gene_expression_data),"color_group"] <- celltype_data[barcode_list,group_by]
   att_gene_expression_data$color_group <- factor(att_gene_expression_data$color_group,levels = group_by_level_list)
+  att_gene_expression_data$gene_name <- factor(att_gene_expression_data$gene_name,levels = att_gene_list)
   gene_num <- length(att_exist_gene_list)
   plot_att_gene_vlnplot(att_gene_expression_data,result_dir,result_name_perfix,gene_num,group_by,my_comparisons)
 }
